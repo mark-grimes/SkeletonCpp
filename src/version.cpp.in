@@ -1,0 +1,4 @@
+#include "REPLACEME_PROJECT_NAMESPACE/version.h"
+
+const char* REPLACEME_PROJECT_NAMESPACE::version::GitDescribe="${Telehist_GIT_DESCRIBE}";
+const char REPLACEME_PROJECT_NAMESPACE::version::GitHash[41]="${Telehist_GIT_HASH}";

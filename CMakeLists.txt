@@ -15,11 +15,17 @@ if( NOT MSVC ) # Microsoft Visual Studio is C++11 by default and doesn't recogni
 endif()
 
 
+# Create the file that has the version information and git hash
+execute_process( COMMAND git describe --dirty --always --tags WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE Telehist_GIT_DESCRIBE OUTPUT_STRIP_TRAILING_WHITESPACE )
+execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE Telehist_GIT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE )
+add_custom_target( CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
+configure_file( "${CMAKE_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_BINARY_DIR}/src/version.cpp" )
+
 
 include_directories( "${CMAKE_SOURCE_DIR}/include" )
 aux_source_directory( "${CMAKE_SOURCE_DIR}/src" library_sources )
 
-add_library( ${PROJECT_NAME} STATIC ${library_sources} )
+add_library( ${PROJECT_NAME} STATIC ${library_sources} "${CMAKE_BINARY_DIR}/src/version.cpp" )
 
 install( TARGETS ${PROJECT_NAME} DESTINATION lib )
 install( DIRECTORY "${CMAKE_SOURCE_DIR}/include/" DESTINATION include )
