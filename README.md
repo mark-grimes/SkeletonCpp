@@ -8,7 +8,7 @@ Clone the project and then run the `createProject.sh` script. Add your own sourc
 to remove the git history and start again as though it were a fresh git project. E.g. to create a project called FooBar:
 
 ```
-git clone <whatever the url is> FooBar
+git clone https://github.com/mark-grimes/SkeletonCpp.git FooBar
 cd FooBar
 <edit createProject.sh so that it knows the project name>
 ./createProject.sh
