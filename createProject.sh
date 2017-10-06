@@ -6,8 +6,13 @@
 # Released under the MIT licence (see https://opensource.org/licenses/MIT)
 #
 
-REPLACEME_PROJECT_NAME="FooBar"
-REPLACEME_PROJECT_NAMESPACE="foobar"
+if [ $# -ne 1 ]; then
+	echo "You should specify the project name as the only argument. Don't use spaces or it'll probably end in tears." >&2
+	exit
+fi
+
+REPLACEME_PROJECT_NAME="$1"
+REPLACEME_PROJECT_NAMESPACE=${REPLACEME_PROJECT_NAME,,} # Convert project name to lower case
 REPLACEME_PROJECT_TESTS_NAMESPACE="${REPLACEME_PROJECT_NAMESPACE}tests"
 
 mv "include/REPLACEME_PROJECT_NAMESPACE" "include/${REPLACEME_PROJECT_NAMESPACE}"
