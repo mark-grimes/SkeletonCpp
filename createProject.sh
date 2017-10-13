@@ -28,4 +28,5 @@ sed -i -e s:"REPLACEME_PROJECT_NAMESPACE":"${REPLACEME_PROJECT_NAMESPACE}":g \
            "include/${REPLACEME_PROJECT_NAMESPACE}/SomeClass.h" \
            "src/SomeClass.cpp" \
            "tests/src/test_SomeClass.cpp" \
+           "src/main.cpp" \
            "CMakeLists.txt"

@@ -24,10 +24,13 @@ configure_file( "${CMAKE_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_BINARY_DIR}/sr
 
 include_directories( "${CMAKE_SOURCE_DIR}/include" )
 aux_source_directory( "${CMAKE_SOURCE_DIR}/src" library_sources )
+list( REMOVE_ITEM library_sources "${CMAKE_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
 
-add_library( ${PROJECT_NAME} STATIC ${library_sources} "${CMAKE_BINARY_DIR}/src/version.cpp" )
+add_library( ${PROJECT_NAME}_LIB STATIC ${library_sources} "${CMAKE_BINARY_DIR}/src/version.cpp" )
+add_executable( ${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/src/main.cpp" )
+target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 
-install( TARGETS ${PROJECT_NAME} DESTINATION lib )
+install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_SOURCE_DIR}/include/" DESTINATION include )
 
 option( BUILD_UNITTESTS "Build unit tests" ON )
@@ -38,5 +41,5 @@ if( BUILD_UNITTESTS )
 	include_directories( "${CMAKE_SOURCE_DIR}/tests/include" )
 	aux_source_directory( "${CMAKE_SOURCE_DIR}/tests/src" unittests_sources )
 	add_executable( ${PROJECT_NAME}Tests ${unittests_sources} "${PROJECT_BINARY_DIR}/tests/src/testinputs.cpp" )
-	target_link_libraries( ${PROJECT_NAME}Tests ${PROJECT_NAME} )
+	target_link_libraries( ${PROJECT_NAME}Tests ${PROJECT_NAME}_LIB )
 endif()
