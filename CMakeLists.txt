@@ -29,6 +29,10 @@ list( REMOVE_ITEM library_sources "${CMAKE_SOURCE_DIR}/src/main.cpp" ) # main.cp
 add_library( ${PROJECT_NAME}_LIB STATIC ${library_sources} "${CMAKE_BINARY_DIR}/src/version.cpp" )
 add_executable( ${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/src/main.cpp" )
 target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
+## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
+#if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
+#	target_link_libraries( ${PROJECT_NAME}_LIB "pthread" )
+#endif()
 
 install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_SOURCE_DIR}/include/" DESTINATION include )
