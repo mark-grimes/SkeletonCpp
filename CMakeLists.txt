@@ -21,6 +21,14 @@ execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE
 add_custom_target( CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
 configure_file( "${CMAKE_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_BINARY_DIR}/src/version.cpp" )
 
+#
+# Dependencies
+# TODO - allow overriding of the bundled versions with system versions
+#
+include_directories( ${CMAKE_SOURCE_DIR}/external/asio/include )
+# tell websocketpp to use asio standalone, and full C++11 support instead of boost stand-ins
+add_definitions( "-DASIO_STANDALONE -D_WEBSOCKETPP_CPP11_STRICT_ -D_WEBSOCKETPP_CPP11_STL_" )
+include_directories( ${CMAKE_SOURCE_DIR}/external/websocketpp )
 
 include_directories( "${CMAKE_SOURCE_DIR}/include" )
 aux_source_directory( "${CMAKE_SOURCE_DIR}/src" library_sources )
