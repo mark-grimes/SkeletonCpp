@@ -70,8 +70,7 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 		server.tlsHandler_.setCertificateChainFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_cert.pem");
 		server.tlsHandler_.setPrivateKeyFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_key.pem");
 		server.listen( port, error );
-		REQUIRE( !error );
-		if( error ) throw std::runtime_error( std::string("Got error '")+error.message()+std::string("' at line ")+std::to_string(__LINE__) );
+		{ INFO( error.message() ); REQUIRE( !error ); }
 		server.runOnThread();
 
 		client_type client;
@@ -90,8 +89,7 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 				if( error ) std::cerr << "Got error '" << error.message() << "' when closing client connection\n";
 			} );
 		auto connection=client.get_connection( "wss://localhost:"+std::to_string(port), error );
-		REQUIRE( !error );
-		if( error ) throw std::runtime_error( std::string("Got error '")+error.message()+"' at line "+std::to_string(__LINE__) );
+		{ INFO( error.message() ); REQUIRE( !error ); }
 		client.connect( connection );
 		client.run();
 		CHECK( receivedMessage==sentMessage );
