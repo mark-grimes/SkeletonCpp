@@ -1,3 +1,7 @@
+#ifndef ENCRYPTED_WEBSOCKETS_AVAILABLE
+#	warning "TLSHandler cannot be used if OpenSSL is not part of the project"
+#else
+
 #ifndef INCLUDEGUARD_REPLACEME_PROJECT_NAMESPACE_impl_TLSHandler_h
 #define INCLUDEGUARD_REPLACEME_PROJECT_NAMESPACE_impl_TLSHandler_h
 
@@ -47,4 +51,5 @@ namespace REPLACEME_PROJECT_NAMESPACE
 	} // end of namespace detail
 } // end of namespace REPLACEME_PROJECT_NAMESPACE
 
-#endif // end of ifndef INCLUDEGUARD_REPLACEME_PROJECT_NAMESPACE_impl_TLSHandler_h
+#endif // end of "#ifndef INCLUDEGUARD_REPLACEME_PROJECT_NAMESPACE_impl_TLSHandler_h"
+#endif // end of ifndef "#ifdef ENCRYPTED_WEBSOCKETS_AVAILABLE"

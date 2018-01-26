@@ -1,3 +1,6 @@
+// Can only use this class if OpenSSL was added as an external to the project
+#ifdef ENCRYPTED_WEBSOCKETS_AVAILABLE
+
 #include "REPLACEME_PROJECT_NAMESPACE/detail/TLSHandler.h"
 
 REPLACEME_PROJECT_NAMESPACE::detail::TLSHandler::TLSHandler( websocketpp::config::asio::alog_type& logger )
@@ -118,3 +121,5 @@ void REPLACEME_PROJECT_NAMESPACE::detail::TLSHandler::handle_tls_init_common( st
 	else pSSLContext->set_verify_mode( asio::ssl::verify_none );
 	if( !diffieHellmanParamsFileName_.empty() ) pSSLContext->use_tmp_dh_file( diffieHellmanParamsFileName_ );
 }
+
+#endif // end of "#ifdef ENCRYPTED_WEBSOCKETS_AVAILABLE"

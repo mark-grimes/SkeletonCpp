@@ -29,12 +29,25 @@ include_directories( ${CMAKE_SOURCE_DIR}/external/asio/include )
 # tell websocketpp to use asio standalone, and full C++11 support instead of boost stand-ins
 add_definitions( "-DASIO_STANDALONE -D_WEBSOCKETPP_CPP11_STRICT_ -D_WEBSOCKETPP_CPP11_STL_" )
 include_directories( ${CMAKE_SOURCE_DIR}/external/websocketpp )
+#
+# Find OpenSSL
+#
+find_package( OpenSSL QUIET )
+if( OPENSSL_FOUND )
+	include_directories( ${OPENSSL_INCLUDE_DIR} )
+	add_definitions( "-DENCRYPTED_WEBSOCKETS_AVAILABLE" )
+else()
+	message( WARNING "OpenSSL was not found on your system. You will not be able to use encrypted websockets." )
+endif()
 
 include_directories( "${CMAKE_SOURCE_DIR}/include" )
 aux_source_directory( "${CMAKE_SOURCE_DIR}/src" library_sources )
 list( REMOVE_ITEM library_sources "${CMAKE_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
 
 add_library( ${PROJECT_NAME}_LIB STATIC ${library_sources} "${CMAKE_BINARY_DIR}/src/version.cpp" )
+if( OPENSSL_FOUND )
+	target_link_libraries( ${PROJECT_NAME}_LIB ${OPENSSL_LIBRARIES} )
+endif()
 add_executable( ${PROJECT_NAME} "${CMAKE_SOURCE_DIR}/src/main.cpp" )
 target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
