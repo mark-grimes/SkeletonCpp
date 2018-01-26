@@ -16,7 +16,7 @@ SCENARIO( "Test that version gives the correct git information", "[version]" )
 	{
 		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitDescribe != nullptr );
 		CHECK( std::char_traits<char>::length(REPLACEME_PROJECT_NAMESPACE::version::GitDescribe) > 0 ); // Not sure how to check this consistently
-		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitHash[41] == 0 );
+		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitHash[40] == 0 );
 		CHECK( std::char_traits<char>::length(REPLACEME_PROJECT_NAMESPACE::version::GitHash) == 40 ); // Check there are no nulls half way through
 	}
 	WHEN( "Checking the git hash is all valid hex characters" )
