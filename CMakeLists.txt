@@ -29,6 +29,7 @@ include_directories( ${CMAKE_SOURCE_DIR}/external/asio/include )
 # tell websocketpp to use asio standalone, and full C++11 support instead of boost stand-ins
 add_definitions( "-DASIO_STANDALONE -D_WEBSOCKETPP_CPP11_STRICT_ -D_WEBSOCKETPP_CPP11_STL_" )
 include_directories( ${CMAKE_SOURCE_DIR}/external/websocketpp )
+include_directories( ${CMAKE_SOURCE_DIR}/external/rapidjson/include )
 #
 # Find OpenSSL
 #
