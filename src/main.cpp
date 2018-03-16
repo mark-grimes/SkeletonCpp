@@ -52,8 +52,16 @@ int main( int argc, char* argv[] )
 		server.init_asio();
 		server.listen( port );
 		server.start_accept();
-		std::cout << "Starting to listen on port " << port << "\n";
-		server.run();
+		int numberOfThreads=std::thread::hardware_concurrency();
+		if( numberOfThreads<1 ) numberOfThreads=1; // Call above can return zero if unknown
+		std::vector<std::thread> threadPool;
+		std::cout << "Starting to listen on port " << port << " using " << numberOfThreads << " threads\n";
+		size_t (server_type::*pRunMethod)() = &server_type::run;
+		// '-1' because this thread will also be used
+		for( size_t index=0; index<numberOfThreads-1; ++index ) threadPool.emplace_back( pRunMethod, &server );
+		server.run(); // Run on this thread as well
+		std::cout << "Server finished, joining the other " << threadPool.size() << " threads\n";
+		for( auto& thread : threadPool ) thread.join();
 	}
 	catch( const std::exception& error )
 	{
