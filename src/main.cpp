@@ -14,7 +14,7 @@ int main( int argc, char* argv[] )
 
 	try
 	{
-		int port=443;
+		int port=8080;
 		server_type server;
 		server.set_http_handler(
 			[&server]( websocketpp::connection_hdl hdl )
