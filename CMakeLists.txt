@@ -2,7 +2,7 @@
 # CMake file to build REPLACEME_PROJECT_NAME.
 # Mark Grimes (mark.grimes@rymapt.com)
 # 06/Oct/2017
-# copyright 2017 Rymapt Ltd
+# copyright 2018 Rymapt Ltd
 # Licence to be decided
 #
 
