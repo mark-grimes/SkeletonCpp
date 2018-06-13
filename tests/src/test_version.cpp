@@ -29,4 +29,4 @@ SCENARIO( "Test that version gives the correct git information", "[version]" )
 		INFO( std::string("The git hash '")+REPLACEME_PROJECT_NAMESPACE::version::GitHash+"' is not valid hex characters" );
 		CHECK( index == 40 ); // make sure the loop completed all the way
 	} // end of WHEN checking all characters are hex
-} // end of 'SCENARIO ... SomeClass'
+} // end of 'SCENARIO ... version'

@@ -1,5 +1,4 @@
 #include <iostream>
-#include "REPLACEME_PROJECT_NAMESPACE/SomeClass.h"
 #include "REPLACEME_PROJECT_NAMESPACE/version.h"
 #include <websocketpp/server.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
@@ -7,8 +6,6 @@
 int main( int argc, char* argv[] )
 {
 	std::cout << "REPLACEME_PROJECT_NAME program with version " << REPLACEME_PROJECT_NAMESPACE::version::GitDescribe << "\n";
-	REPLACEME_PROJECT_NAMESPACE::SomeClass instance;
-	std::cout << "SomeClass::someValue returns '" << instance.someValue() << "'\n";
 
 	typedef websocketpp::server<websocketpp::config::asio> server_type;
 

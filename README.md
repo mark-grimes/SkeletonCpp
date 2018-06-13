@@ -22,7 +22,7 @@ to remove the git history and start again as though it were a fresh git project.
 git clone https://github.com/mark-grimes/SkeletonCpp.git FooBar
 cd FooBar
 ./createProject.sh FooBar
-<replace README.md, include/foobar/SomeClass.h, src/SomeClass.cpp and tests/src/test_SomeClass.cpp with your own files>
+<replace README.md etc. with your own files>
 rm -rf .git ./createProject.sh
 git init
 git add .
