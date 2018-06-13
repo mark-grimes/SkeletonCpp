@@ -34,8 +34,5 @@ sed $INPLACE -e s:"REPLACEME_PROJECT_NAMESPACE":"${REPLACEME_PROJECT_NAMESPACE}"
                  "include/${REPLACEME_PROJECT_NAMESPACE}/version.h" \
                  "src/version.cpp.in" \
                  "tests/src/test_version.cpp" \
-                 "include/${REPLACEME_PROJECT_NAMESPACE}/SomeClass.h" \
-                 "src/SomeClass.cpp" \
-                 "tests/src/test_SomeClass.cpp" \
                  "src/main.cpp" \
                  "CMakeLists.txt"
