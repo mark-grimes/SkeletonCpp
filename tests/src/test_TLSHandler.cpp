@@ -30,15 +30,9 @@ public:
 		// will block indefinitely.
 		if( runThread_.joinable() ) runThread_.join();
 	}
-	void listen( uint16_t port, std::error_code& ec )
-	{
-		server_.listen( port, ec );
-		server_.start_accept();
-	}
-	void runOnThread()
-	{
-		runThread_=std::thread( &server_type::run, &server_ );
-	}
+	template<typename... Ts> void listen( Ts&&... args ) { server_.listen( std::forward<Ts>(args)... ); }
+	template<typename... Ts> void start_accept( Ts&&... args ) { server_.start_accept( std::forward<Ts>(args)... ); }
+	void runOnThread() { runThread_=std::thread( &server_type::run, &server_ ); }
 public:
 	server_type server_;
 	tls_handler_type tlsHandler_;
@@ -69,8 +63,8 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 			} );
 		server.tlsHandler_.setCertificateChainFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_cert.pem");
 		server.tlsHandler_.setPrivateKeyFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_key.pem");
-		server.listen( port, error );
-		{ INFO( error.message() ); REQUIRE( !error ); }
+		server.listen( port, error ); { INFO( error.message() ); REQUIRE( !error ); }
+		server.start_accept( error ); { INFO( error.message() ); REQUIRE( !error ); }
 		server.runOnThread();
 
 		client_type client;
