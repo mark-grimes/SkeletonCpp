@@ -87,7 +87,7 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 			} );
 		bool clientFailedToConnect=false;
 		client.set_fail_handler([&clientFailedToConnect](websocketpp::connection_hdl){ clientFailedToConnect=true; } );
-		auto connection=client.get_connection( "wss://localhost:"+std::to_string(port), error );
+		auto connection=client.get_connection( "wss://127.0.0.1:"+std::to_string(port), error );
 		{ INFO( error.message() ); REQUIRE( !error ); }
 		client.connect( connection );
 		client.run();
