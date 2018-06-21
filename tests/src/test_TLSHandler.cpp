@@ -85,10 +85,13 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 				client.get_con_from_hdl(hdl)->close( websocketpp::close::status::normal, "Had enough. Bye.", error );
 				if( error ) std::cerr << "Got error '" << error.message() << "' when closing client connection\n";
 			} );
+		bool clientFailedToConnect=false;
+		client.set_fail_handler([&clientFailedToConnect](websocketpp::connection_hdl){ clientFailedToConnect=true; } );
 		auto connection=client.get_connection( "wss://localhost:"+std::to_string(port), error );
 		{ INFO( error.message() ); REQUIRE( !error ); }
 		client.connect( connection );
 		client.run();
+		REQUIRE_FALSE( clientFailedToConnect );
 		CHECK( receivedMessage==sentMessage );
 	} // end of '"A server and client each connected to different TLSHandlers"'
 } // end of 'SCENARIO "Test that TLSHandler creates secure connections"'
