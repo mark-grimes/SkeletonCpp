@@ -32,6 +32,7 @@ public:
 	}
 	template<typename... Ts> void listen( Ts&&... args ) { server_.listen( std::forward<Ts>(args)... ); }
 	template<typename... Ts> void start_accept( Ts&&... args ) { server_.start_accept( std::forward<Ts>(args)... ); }
+	asio::ip::tcp::endpoint get_local_endpoint( std::error_code& ec ) { return server_.get_local_endpoint(ec); }
 	void runOnThread() { runThread_=std::thread( &server_type::run, &server_ ); }
 public:
 	server_type server_;
@@ -48,7 +49,6 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 		typedef websocketpp::server<websocketpp::config::asio_tls> connection_type;
 		typedef REPLACEME_PROJECT_NAMESPACE::detail::TLSHandler tls_handler_type;
 
-		int port=5000;
 		std::error_code error;
 		const std::string sentMessage( "Hello, and welcome to my test" );
 
@@ -63,9 +63,12 @@ SCENARIO( "Test that TLSHandler creates secure connections", "[TLSHandler]" )
 			} );
 		server.tlsHandler_.setCertificateChainFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_cert.pem");
 		server.tlsHandler_.setPrivateKeyFile( REPLACEME_PROJECT_TESTS_NAMESPACE::testinputs::testFileDirectory+"tlscerts/serverA_key.pem");
-		server.listen( port, error ); { INFO( error.message() ); REQUIRE( !error ); }
+		server.listen( 0, error ); { INFO( error.message() ); REQUIRE( !error ); }
 		server.start_accept( error ); { INFO( error.message() ); REQUIRE( !error ); }
 		server.runOnThread();
+
+		int port=server.get_local_endpoint(error).port();
+		{ INFO( error.message() ); REQUIRE( !error ); }
 
 		client_type client;
 		tls_handler_type clientTLSHandler( client.get_alog() );
