@@ -6,8 +6,8 @@
 # Released under the MIT licence (see https://opensource.org/licenses/MIT)
 #
 
-if [ $# -ne 1 ]; then
-	echo "You should specify the project name as the only argument. Don't use spaces or it'll probably end in tears." >&2
+if [ $# -ne 1 ] && [ $# -ne 2 ]; then
+	echo "You should specify the project name as the first argument. Don't use spaces or it'll probably end in tears. Optionally also specify the namespace as the second argument." >&2
 	exit
 fi
 
@@ -21,7 +21,12 @@ else
 fi
 
 REPLACEME_PROJECT_NAME="$1"
-REPLACEME_PROJECT_NAMESPACE=`echo ${REPLACEME_PROJECT_NAME} | tr '[:upper:]' '[:lower:]'`  # Convert project name to lower case
+if [ $# -gt 1 ]; then
+	REPLACEME_PROJECT_NAMESPACE="$2"
+else
+	# Convert project name to lower case
+	REPLACEME_PROJECT_NAMESPACE=`echo ${REPLACEME_PROJECT_NAME} | tr '[:upper:]' '[:lower:]'`
+fi
 REPLACEME_PROJECT_TESTS_NAMESPACE="${REPLACEME_PROJECT_NAMESPACE}tests"
 
 mv "include/REPLACEME_PROJECT_NAMESPACE" "include/${REPLACEME_PROJECT_NAMESPACE}"
