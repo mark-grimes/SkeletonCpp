@@ -26,7 +26,7 @@
 # Released under the MIT Licence
 #
 # The canonical location of this file is
-# https://github.com/mark-grimes/SkeletonCpp/blob/websockets/doc/Doxyfile.in
+# https://github.com/mark-grimes/SkeletonCpp/blob/websockets/docs/Doxyfile.in
 #
 
 PROJECT_NAME           = "REPLACEME_PROJECT_NAME"
