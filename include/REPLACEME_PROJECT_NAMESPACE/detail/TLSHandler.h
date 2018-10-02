@@ -1,3 +1,33 @@
+/*
+ * Copyright 2018 Mark Grimes
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/** @file
+ * @brief Header definition of a class to handle TLS handshakes for both client and server.
+ *
+ * Requires that OpenSSL has been found by the build system, otherwise the definition is ifdef out.
+ *
+ * The canonical location of this file is
+ * https://github.com/mark-grimes/SkeletonCpp/blob/websockets/include/REPLACEME_PROJECT_NAMESPACE/detail/TLSHandler.h
+ *
+ * @author Mark Grimes
+ * @copyright Copyright 2018 Mark Grimes. Released under the MIT licence.
+ */
 #ifndef ENCRYPTED_WEBSOCKETS_AVAILABLE
 #	warning "TLSHandler cannot be used if OpenSSL is not part of the project"
 #else
