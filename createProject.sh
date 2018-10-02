@@ -40,4 +40,6 @@ sed $INPLACE -e s:"REPLACEME_PROJECT_NAMESPACE":"${REPLACEME_PROJECT_NAMESPACE}"
                  "src/version.cpp.in" \
                  "tests/src/test_version.cpp" \
                  "src/main.cpp" \
+                 "docs/CMakeLists.txt" \
+                 "docs/Doxyfile.in" \
                  "CMakeLists.txt"

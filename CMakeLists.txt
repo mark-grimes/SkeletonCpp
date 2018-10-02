@@ -60,7 +60,9 @@ install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
 
 option( BUILD_UNITTESTS "Build unit tests" ON )
+option( BUILD_DOCS "Build API documentation" OFF )
 message( STATUS "BUILD_UNITTESTS: ${BUILD_UNITTESTS}" )
+message( STATUS "BUILD_DOCS:      ${BUILD_DOCS}" )
 if( BUILD_UNITTESTS )
 	# Fix the test configuration file to have the correct paths
 	configure_file( "${PROJECT_SOURCE_DIR}/tests/src/testinputs.cpp.in" "${PROJECT_BINARY_DIR}/tests/src/testinputs.cpp" @ONLY )
@@ -74,4 +76,8 @@ if( BUILD_UNITTESTS )
 		add_executable( ${PROJECT_NAME}Tests ${unittests_sources} "${PROJECT_BINARY_DIR}/tests/src/testinputs.cpp" )
 		target_link_libraries( ${PROJECT_NAME}Tests ${PROJECT_NAME}_LIB )
 	endif()
+endif()
+
+if( BUILD_DOCS )
+	add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/docs )
 endif()
