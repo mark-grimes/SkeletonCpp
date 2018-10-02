@@ -82,7 +82,9 @@ install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
 
 option( BUILD_UNITTESTS "Build unit tests" ON )
+option( BUILD_DOCS "Build API documentation" OFF )
 message( STATUS "BUILD_UNITTESTS: ${BUILD_UNITTESTS}" )
+message( STATUS "BUILD_DOCS:      ${BUILD_DOCS}" )
 if( BUILD_UNITTESTS )
 	# Fix the test configuration file to have the correct paths
 	configure_file( "${PROJECT_SOURCE_DIR}/tests/src/testinputs.cpp.in" "${PROJECT_BINARY_DIR}/tests/src/testinputs.cpp" @ONLY )
@@ -99,4 +101,8 @@ if( BUILD_UNITTESTS )
 			target_link_libraries( ${PROJECT_NAME}Tests "pthread" )
 		endif()
 	endif()
+endif()
+
+if( BUILD_DOCS )
+	add_subdirectory( ${CMAKE_CURRENT_SOURCE_DIR}/docs )
 endif()

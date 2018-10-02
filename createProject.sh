@@ -43,4 +43,6 @@ sed $INPLACE -e s:"REPLACEME_PROJECT_NAMESPACE":"${REPLACEME_PROJECT_NAMESPACE}"
                  "src/TLSHandler.cpp" \
                  "tests/src/test_TLSHandler.cpp" \
                  "src/main.cpp" \
+                 "docs/CMakeLists.txt" \
+                 "docs/Doxyfile.in" \
                  "CMakeLists.txt"
