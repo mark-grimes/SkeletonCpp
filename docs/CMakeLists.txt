@@ -36,5 +36,5 @@ else()
 	# Need to replace "DOXYGEN_INPUT" in the Doxygen file with the actual path to the sources
 	get_filename_component( DOXYGEN_INPUT "${CMAKE_CURRENT_SOURCE_DIR}/../include" REALPATH )
 	configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in" "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile" )
-	add_custom_target( docs Doxygen::doxygen ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile )
+	add_custom_target( docs ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile )
 endif()
