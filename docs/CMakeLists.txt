@@ -25,7 +25,7 @@
 # Released under the MIT Licence
 #
 # The canonical location of this file is
-# https://github.com/mark-grimes/SkeletonCpp/blob/master/doc/CMakeLists.txt
+# https://github.com/mark-grimes/SkeletonCpp/blob/master/docs/CMakeLists.txt
 #
 
 find_package( Doxygen QUIET )
