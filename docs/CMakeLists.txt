@@ -30,7 +30,8 @@
 
 find_package( Doxygen QUIET )
 if( NOT DOXYGEN_FOUND )
-	message( "Doxygen was not found" )
+	message( WARNING "Doxygen was not found. If you have it in a non standard location try setting DOXYGEN_EXECUTABLE manually." )
+	add_custom_target( docs ${CMAKE_COMMAND} -E echo "The docs target cannot be built because doxygen was not found" )
 else()
 	# Need to replace "DOXYGEN_INPUT" in the Doxygen file with the actual path to the sources
 	get_filename_component( DOXYGEN_INPUT "${CMAKE_CURRENT_SOURCE_DIR}/../include" REALPATH )
