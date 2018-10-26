@@ -43,18 +43,17 @@ execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE
 add_custom_target( ${PROJECT_NAME}_CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
 configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
 
-
-include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
 list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
-
 add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
-add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
-target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
+target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
 #if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 #	target_link_libraries( ${PROJECT_NAME}_LIB "pthread" )
 #endif()
+
+add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
+target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 
 install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
