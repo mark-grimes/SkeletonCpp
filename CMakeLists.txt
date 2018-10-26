@@ -45,10 +45,10 @@ configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_BINA
 
 
 include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/include" )
-aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" library_sources )
-list( REMOVE_ITEM library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
+aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
+list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
 
-add_library( ${PROJECT_NAME}_LIB STATIC ${library_sources} "${PROJECT_BINARY_DIR}/src/version.cpp" )
+add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} "${PROJECT_BINARY_DIR}/src/version.cpp" )
 add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
 target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
