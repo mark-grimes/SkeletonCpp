@@ -43,40 +43,38 @@ execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE
 add_custom_target( ${PROJECT_NAME}_CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
 configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
 
+
+aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
+list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
+add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
+target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 #
 # Dependencies
 # TODO - allow overriding of the bundled versions with system versions
 #
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/external/asio/include )
+target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/external/asio/include" )
 # tell websocketpp to use asio standalone, and full C++11 support instead of boost stand-ins
-add_definitions( "-DASIO_STANDALONE -D_WEBSOCKETPP_CPP11_STRICT_ -D_WEBSOCKETPP_CPP11_STL_" )
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/external/websocketpp )
-include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include )
+target_compile_definitions( ${PROJECT_NAME}_LIB PUBLIC "-DASIO_STANDALONE -D_WEBSOCKETPP_CPP11_STRICT_ -D_WEBSOCKETPP_CPP11_STL_" )
+target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/external/websocketpp" )
+target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include" )
 #
 # Find OpenSSL
 #
 find_package( OpenSSL QUIET )
 if( OPENSSL_FOUND )
-	include_directories( ${OPENSSL_INCLUDE_DIR} )
-	add_definitions( "-DENCRYPTED_WEBSOCKETS_AVAILABLE" )
+	target_link_libraries( ${PROJECT_NAME}_LIB ${OPENSSL_LIBRARIES} )
+	target_include_directories( ${PROJECT_NAME}_LIB PRIVATE "${OPENSSL_INCLUDE_DIR}" )
+	target_compile_definitions( ${PROJECT_NAME}_LIB PUBLIC "-DENCRYPTED_WEBSOCKETS_AVAILABLE" )
 else()
 	message( WARNING "OpenSSL was not found on your system. You will not be able to use encrypted websockets." )
 endif()
-
-include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/include" )
-aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
-list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
-
-add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
-if( OPENSSL_FOUND )
-	target_link_libraries( ${PROJECT_NAME}_LIB ${OPENSSL_LIBRARIES} )
-endif()
-add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
-target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
 #if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
 #	target_link_libraries( ${PROJECT_NAME}_LIB "pthread" )
 #endif()
+
+add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
+target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
 
 install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
