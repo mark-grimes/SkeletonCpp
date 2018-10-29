@@ -22,7 +22,7 @@
 # Mark Grimes (mark.grimes@rymapt.com)
 # 06/Oct/2017
 # Copyright 2018 Mark Grimes
-# Released under the MIT Licence
+# Released under the MIT Licence (this file only, other project files may differ)
 #
 # The canonical location of this file is
 # https://github.com/mark-grimes/SkeletonCpp/blob/websockets/CMakeLists.txt
@@ -40,6 +40,7 @@ endif()
 # Create the file that has the version information and git hash
 execute_process( COMMAND git describe --dirty --always --tags WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_DESCRIBE OUTPUT_STRIP_TRAILING_WHITESPACE )
 execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE )
+execute_process( COMMAND git log -1 --pretty=format:%h WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_SHORT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE )
 add_custom_target( ${PROJECT_NAME}_CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
 configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
 

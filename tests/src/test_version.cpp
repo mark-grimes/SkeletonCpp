@@ -44,12 +44,14 @@ namespace
 
 SCENARIO( "Test that REPLACEME_PROJECT_NAMESPACE::version gives the correct git information", "[version]" )
 {
-	WHEN( "Test there are none zero values for the git hash and git describe" )
+	WHEN( "Test there are non zero values for the git hash and git describe" )
 	{
 		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitDescribe != nullptr );
 		CHECK( std::char_traits<char>::length(REPLACEME_PROJECT_NAMESPACE::version::GitDescribe) > 0 ); // Not sure how to check this consistently
 		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitHash[40] == 0 );
 		CHECK( std::char_traits<char>::length(REPLACEME_PROJECT_NAMESPACE::version::GitHash) == 40 ); // Check there are no nulls half way through
+		CHECK( REPLACEME_PROJECT_NAMESPACE::version::GitShortHash[7] == 0 );
+		CHECK( std::char_traits<char>::length(REPLACEME_PROJECT_NAMESPACE::version::GitShortHash) == 7 ); // Check there are no nulls half way through
 	}
 	WHEN( "Checking the git hash is all valid hex characters" )
 	{
@@ -60,5 +62,15 @@ SCENARIO( "Test that REPLACEME_PROJECT_NAMESPACE::version gives the correct git 
 		}
 		INFO( std::string("The git hash '")+REPLACEME_PROJECT_NAMESPACE::version::GitHash+"' is not valid hex characters" );
 		CHECK( index == 40 ); // make sure the loop completed all the way
+	} // end of WHEN checking all characters are hex
+	WHEN( "Checking the git short hash is all valid hex characters" )
+	{
+		size_t index;
+		for( index=0; index<7; ++index )
+		{
+			if( !isHexChar(REPLACEME_PROJECT_NAMESPACE::version::GitShortHash[index]) ) break;
+		}
+		INFO( std::string("The git hash '")+REPLACEME_PROJECT_NAMESPACE::version::GitShortHash+"' is not valid hex characters" );
+		CHECK( index == 7 ); // make sure the loop completed all the way
 	} // end of WHEN checking all characters are hex
 } // end of 'SCENARIO ... version'
