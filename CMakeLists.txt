@@ -38,11 +38,17 @@ endif()
 
 
 # Create the file that has the version information and git hash
-execute_process( COMMAND git describe --dirty --always --tags WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_DESCRIBE OUTPUT_STRIP_TRAILING_WHITESPACE )
-execute_process( COMMAND git log -1 --pretty=format:%H WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE )
-execute_process( COMMAND git log -1 --pretty=format:%h WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE REPLACEME_PROJECT_NAME_GIT_SHORT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE )
-add_custom_target( ${PROJECT_NAME}_CreateVersionFile ALL ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" ) # Make sure the git hash is always checked (not just at configure time)
-configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
+file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_CreateVersionFileDir" )
+add_custom_target( ${PROJECT_NAME}_CreateVersionFile
+					COMMAND ${CMAKE_COMMAND} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/GitVersion"
+						"-Dinput_config_file=${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in"
+						"-Doutput_configured_file=${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp"
+						"-Dgit_directory=${CMAKE_CURRENT_SOURCE_DIR}"
+						"-Dvariable_prefix=${PROJECT_NAME}_"
+					WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_CreateVersionFileDir"
+					DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" )
+add_custom_command( OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp"
+					DEPENDS ${PROJECT_NAME}_CreateVersionFile )
 
 aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
 list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
