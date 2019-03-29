@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Mark Grimes
+ * Copyright 2019 Mark Grimes
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -24,7 +24,7 @@
  * https://github.com/mark-grimes/SkeletonCpp/blob/websockets/tests/src/test_TLSHandler.cpp
  *
  * @author Mark Grimes
- * @copyright Copyright 2018 Mark Grimes. Released under the MIT licence.
+ * @copyright Copyright 2019 Mark Grimes. Released under the MIT licence.
  */
 // Can only use the TLSHandler class if OpenSSL was added as an external to the project
 #ifdef ENCRYPTED_WEBSOCKETS_AVAILABLE

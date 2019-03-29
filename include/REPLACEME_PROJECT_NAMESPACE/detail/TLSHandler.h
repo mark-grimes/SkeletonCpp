@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Mark Grimes
+ * Copyright 2019 Mark Grimes
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -26,7 +26,7 @@
  * https://github.com/mark-grimes/SkeletonCpp/blob/websockets/include/REPLACEME_PROJECT_NAMESPACE/detail/TLSHandler.h
  *
  * @author Mark Grimes
- * @copyright Copyright 2018 Mark Grimes. Released under the MIT licence.
+ * @copyright Copyright 2019 Mark Grimes. Released under the MIT licence.
  */
 #ifndef ENCRYPTED_WEBSOCKETS_AVAILABLE
 #	warning "TLSHandler cannot be used if OpenSSL is not part of the project"
