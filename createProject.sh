@@ -2,7 +2,7 @@
 #
 # Creates a C++ cmake project with test directory etcetera
 # Mark Grimes 06/Oct/2017
-# copyright Mark Grimes 2018
+# copyright Mark Grimes 2019
 # Released under the MIT licence (see https://opensource.org/licenses/MIT)
 #
 

@@ -1,5 +1,5 @@
 #
-# Copyright 2018 Mark Grimes
+# Copyright 2019 Mark Grimes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 # associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -21,7 +21,7 @@
 # CMake file to build the documentation for REPLACEME_PROJECT_NAME.
 # Mark Grimes (mark.grimes@rymapt.com)
 # 02/Oct/2018
-# Copyright 2018 Mark Grimes
+# Copyright 2019 Mark Grimes
 # Released under the MIT Licence
 #
 # The canonical location of this file is
