@@ -50,9 +50,10 @@ add_custom_target( ${PROJECT_NAME}_CreateVersionFile
 add_custom_command( OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp"
 					DEPENDS ${PROJECT_NAME}_CreateVersionFile )
 
-aux_source_directory( "${CMAKE_CURRENT_SOURCE_DIR}/src" ${PROJECT_NAME}_library_sources )
-list( REMOVE_ITEM ${PROJECT_NAME}_library_sources "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" ) # main.cpp belongs only in the executable
-add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" )
+# Add any source files to this list
+set( ${PROJECT_NAME}_library_sources
+		"${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" ) # Generated file containing the git hash
+add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} )
 target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
 #if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
