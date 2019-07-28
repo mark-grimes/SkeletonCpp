@@ -39,4 +39,4 @@ set( REPLACEME_PROJECT_NAME_unittests_sources
 	src/main.cpp )
 add_executable( REPLACEME_PROJECT_NAMETests ${REPLACEME_PROJECT_NAME_unittests_sources} )
 target_include_directories( REPLACEME_PROJECT_NAMETests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include" )
-target_link_libraries( REPLACEME_PROJECT_NAMETests REPLACEME_PROJECT_NAME_LIB )
+target_link_libraries( REPLACEME_PROJECT_NAMETests REPLACEME_PROJECT_NAMECore )
