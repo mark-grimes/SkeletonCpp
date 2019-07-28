@@ -38,32 +38,32 @@ endif()
 
 
 # Create the file that has the version information and git hash
-file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_CreateVersionFileDir" )
-add_custom_target( ${PROJECT_NAME}_CreateVersionFile
+file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/REPLACEME_PROJECT_NAME_CreateVersionFileDir" )
+add_custom_target( REPLACEME_PROJECT_NAME_CreateVersionFile
 					COMMAND ${CMAKE_COMMAND} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/GitVersion"
 						"-Dinput_config_file=${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in"
 						"-Doutput_configured_file=${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp"
 						"-Dgit_directory=${CMAKE_CURRENT_SOURCE_DIR}"
-						"-Dvariable_prefix=${PROJECT_NAME}_"
-					WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_CreateVersionFileDir"
+						"-Dvariable_prefix=REPLACEME_PROJECT_NAME_"
+					WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/REPLACEME_PROJECT_NAME_CreateVersionFileDir"
 					DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/version.cpp.in" )
 add_custom_command( OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp"
-					DEPENDS ${PROJECT_NAME}_CreateVersionFile )
+					DEPENDS REPLACEME_PROJECT_NAME_CreateVersionFile )
 
 # Add any source files to this list
-set( ${PROJECT_NAME}_library_sources
+set( REPLACEME_PROJECT_NAME_library_sources
 		"${CMAKE_CURRENT_BINARY_DIR}/src/version.cpp" ) # Generated file containing the git hash
-add_library( ${PROJECT_NAME}_LIB STATIC ${${PROJECT_NAME}_library_sources} )
-target_include_directories( ${PROJECT_NAME}_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
+add_library( REPLACEME_PROJECT_NAME_LIB STATIC ${REPLACEME_PROJECT_NAME_library_sources} )
+target_include_directories( REPLACEME_PROJECT_NAME_LIB PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
 #if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
-#	target_link_libraries( ${PROJECT_NAME}_LIB "pthread" )
+#	target_link_libraries( REPLACEME_PROJECT_NAME_LIB "pthread" )
 #endif()
 
-add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
-target_link_libraries( ${PROJECT_NAME} ${PROJECT_NAME}_LIB )
+add_executable( REPLACEME_PROJECT_NAME "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
+target_link_libraries( REPLACEME_PROJECT_NAME REPLACEME_PROJECT_NAME_LIB )
 
-install( TARGETS ${PROJECT_NAME}_LIB DESTINATION lib )
+install( TARGETS REPLACEME_PROJECT_NAME_LIB DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
 
 option( BUILD_UNITTESTS "Build unit tests" ON )

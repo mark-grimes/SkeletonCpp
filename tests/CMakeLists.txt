@@ -33,10 +33,10 @@
 configure_file( "${CMAKE_CURRENT_SOURCE_DIR}/src/testinputs.cpp.in" "${CMAKE_CURRENT_BINARY_DIR}/src/testinputs.cpp" @ONLY )
 
 # Compile all the test sources into an executable test runner
-set( ${PROJECT_NAME}_unittests_sources
+set( REPLACEME_PROJECT_NAME_unittests_sources
 	src/test_version.cpp
 	"${CMAKE_CURRENT_BINARY_DIR}/src/testinputs.cpp"  # Generated file with directory locations of the test data
 	src/main.cpp )
-add_executable( ${PROJECT_NAME}Tests ${${PROJECT_NAME}_unittests_sources} )
-target_include_directories( ${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include" )
-target_link_libraries( ${PROJECT_NAME}Tests ${PROJECT_NAME}_LIB )
+add_executable( REPLACEME_PROJECT_NAMETests ${REPLACEME_PROJECT_NAME_unittests_sources} )
+target_include_directories( REPLACEME_PROJECT_NAMETests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include" )
+target_link_libraries( REPLACEME_PROJECT_NAMETests REPLACEME_PROJECT_NAME_LIB )
