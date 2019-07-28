@@ -57,11 +57,11 @@ add_library( REPLACEME_PROJECT_NAMECore STATIC ${REPLACEME_PROJECT_NAME_library_
 target_include_directories( REPLACEME_PROJECT_NAMECore PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include" )
 ## Uncomment this if you get "undefined reference to `pthread_create'" when using std::thread
 #if( ${CMAKE_SYSTEM_NAME} MATCHES "Linux" )
-#	target_link_libraries( REPLACEME_PROJECT_NAMECore "pthread" )
+#	target_link_libraries( REPLACEME_PROJECT_NAMECore PUBLIC "pthread" )
 #endif()
 
 add_executable( REPLACEME_PROJECT_NAME "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp" )
-target_link_libraries( REPLACEME_PROJECT_NAME REPLACEME_PROJECT_NAMECore )
+target_link_libraries( REPLACEME_PROJECT_NAME PRIVATE REPLACEME_PROJECT_NAMECore )
 
 install( TARGETS REPLACEME_PROJECT_NAMECore DESTINATION lib )
 install( DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/" DESTINATION include )
