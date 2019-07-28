@@ -42,4 +42,5 @@ sed $INPLACE -e s:"REPLACEME_PROJECT_NAMESPACE":"${REPLACEME_PROJECT_NAMESPACE}"
                  "src/main.cpp" \
                  "docs/CMakeLists.txt" \
                  "docs/Doxyfile.in" \
+                 "tests/CMakeLists.txt" \
                  "CMakeLists.txt"
