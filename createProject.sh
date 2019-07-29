@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/sh
 #
 # Creates a C++ cmake project with test directory etcetera
 # Mark Grimes 06/Oct/2017
