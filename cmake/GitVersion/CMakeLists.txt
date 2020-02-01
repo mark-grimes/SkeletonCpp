@@ -37,6 +37,8 @@
 
 cmake_minimum_required( VERSION 2.8 )
 
+project( GetGitVersion )
+
 if( NOT input_config_file )
 	message( FATAL_ERROR "The variable 'input_config_file' was not set" )
 endif()
